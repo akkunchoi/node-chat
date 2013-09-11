@@ -2,6 +2,15 @@ var socket = io.connect('http://localhost:8080');
 var timer;
 
 $(document).ready(function() {
+  socket.on('ready', function(data){
+    for ( var i = 0; i < data.length; i++){
+      var d = data[i];
+        $('<li></li>').text(d.user + ': ' + d.text)
+                      .attr('style', d.css)
+                      .appendTo('body');
+    }
+  });
+
   $('#text').keydown(function(event) {
     // エンターキーで発言をサーバに送信する
     if (event.keyCode === 13) {
